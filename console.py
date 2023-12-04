@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-This module updates the HBNBCommand class to update an instance based on its ID with a dictionary.
+This module updates the HBNBCommand class to update an instance based on its
+ID with a dictionary.
 Usage: <class name>.update(<id>, <dictionary representation>)
 """
 
@@ -107,7 +108,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """
-        Prints the string representation of an instance based on the class name and id.
+        Prints the string representation of an instance based on the class
+        name and id.
         Usage: show <class name> <id>
         """
         if line == "" or line is None:
