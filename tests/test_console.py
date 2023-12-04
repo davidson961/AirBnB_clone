@@ -411,7 +411,9 @@ EOF  all  count  create  destroy  help  quit  show  update
         val = "fooval"
         uid = self.create_class(classname)
         cmd = '{}.update("{}", "{}", "{}")'
+        #  cmd = 'update {} {} {} {}'
         cmd = cmd.format(classname, uid, attr, val)
+        #  print("CMD::", cmd)
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(cmd)
         s = f.getvalue()
@@ -429,7 +431,9 @@ EOF  all  count  create  destroy  help  quit  show  update
         val = "fooval"
         uid = self.create_class(classname)
         cmd = '{}.update("{}", "{}", "{}")'
+        #  cmd = 'update {} {} {} {}'
         cmd = cmd.format(classname, uid, attr, val)
+        #  print("CMD::", cmd)
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(cmd)
         s = f.getvalue()
@@ -447,7 +451,9 @@ EOF  all  count  create  destroy  help  quit  show  update
         val = "fooval"
         uid = self.create_class(classname)
         cmd = '{}.update("{}", "{}", "{}")'
+        #  cmd = 'update {} {} {} {}'
         cmd = cmd.format(classname, uid, attr, val)
+        #  print("CMD::", cmd)
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(cmd)
         s = f.getvalue()
@@ -465,7 +471,9 @@ EOF  all  count  create  destroy  help  quit  show  update
         val = "fooval"
         uid = self.create_class(classname)
         cmd = '{}.update("{}", "{}", "{}")'
+        #  cmd = 'update {} {} {} {}'
         cmd = cmd.format(classname, uid, attr, val)
+        #  print("CMD::", cmd)
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(cmd)
         s = f.getvalue()
@@ -483,7 +491,9 @@ EOF  all  count  create  destroy  help  quit  show  update
         val = "fooval"
         uid = self.create_class(classname)
         cmd = '{}.update("{}", "{}", "{}")'
+        #  cmd = 'update {} {} {} {}'
         cmd = cmd.format(classname, uid, attr, val)
+        #  print("CMD::", cmd)
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(cmd)
         s = f.getvalue()
@@ -501,7 +511,9 @@ EOF  all  count  create  destroy  help  quit  show  update
         val = "fooval"
         uid = self.create_class(classname)
         cmd = '{}.update("{}", "{}", "{}")'
+        #  cmd = 'update {} {} {} {}'
         cmd = cmd.format(classname, uid, attr, val)
+        #  print("CMD::", cmd)
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(cmd)
         s = f.getvalue()
@@ -519,7 +531,9 @@ EOF  all  count  create  destroy  help  quit  show  update
         val = "fooval"
         uid = self.create_class(classname)
         cmd = '{}.update("{}", "{}", "{}")'
+        #  cmd = 'update {} {} {} {}'
         cmd = cmd.format(classname, uid, attr, val)
+        #  print("CMD::", cmd)
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(cmd)
         s = f.getvalue()
@@ -557,6 +571,7 @@ EOF  all  count  create  destroy  help  quit  show  update
 
     def help_test_update(self, classname, uid, attr, val, quotes, func):
         """Conducts testing for the update command."""
+        #  print("QUOTES", quotes)
         FileStorage._FileStorage__objects = {}
         if os.path.isfile("file.json"):
             os.remove("file.json")
@@ -570,6 +585,8 @@ EOF  all  count  create  destroy  help  quit  show  update
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(cmd)
         msg = f.getvalue()[:-1]
+        # print("MSG::", msg)
+        # print("CMD::", cmd)
         self.assertEqual(len(msg), 0)
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('{}.show("{}")'.format(classname, uid))
