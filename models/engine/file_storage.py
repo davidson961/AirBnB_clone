@@ -8,7 +8,8 @@ import json
 
 class FileStorage:
     """
-    FileStorage class for serializing instances to a JSON file and deserializing JSON file to instances.
+    FileStorage class for serializing instances to a JSON file and
+    deserializing JSON file to instances.
     """
 
     __file_path = "file.json"
@@ -31,18 +32,19 @@ class FileStorage:
         """
         Serializes __objects to the JSON file (path: __file_path).
         """
-        serialized_objects = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
-        with open(FileStorage.__file_path, mode='w', encoding='utf-8') as file:
-            json.dump(serialized_objects, file)
+        s_obj = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
+        with open(FileStorage.__file_path, mode='w', encoding='utf-8') as f:
+            json.dump(s_obj, f)
 
     def reload(self):
         """
-        Deserializes the JSON file to __objects (only if the JSON file (__file_path) exists).
+        Deserializes the JSON file to __objects
+        (only if the JSON file (__file_path) exists).
         """
         from models.base_model import BaseModel
         try:
-            with open(FileStorage.__file_path, mode='r', encoding='utf-8') as file:
-                loaded_objects = json.load(file)
+            with open(FileStorage.__file_path, mode='r', encoding='utf-8') as f:
+                loaded_objects = json.load(f)
                 for key, value in loaded_objects.items():
                     class_name = value["__class__"]
                     class_name = class_name.split('.')[-1]
@@ -53,6 +55,7 @@ class FileStorage:
 
     def classes(self):
         """
-        Get a dictionary of class names mapped to their corresponding class objects.
+        Get a dictionary of class names mapped to their
+        corresponding class objects.
         """
         return storage._FileStorage__objects
