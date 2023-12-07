@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 """
-Module containing the FileStorage class for serializing and deserializing instances.
+Module containing the FileStorage class for
+serializing and deserializing instances.
 """
 import json
+import datetime
 
 
 class FileStorage:
@@ -28,8 +30,9 @@ class FileStorage:
                 loaded_objects = json.load(file)
                 for key, value in loaded_objects.items():
                     class_name = value["__class__"]
-                    class_name = class_name.split('.')[-1]  # Extract the class name
-                    obj_instance = eval(class_name)(**value)
+                    class_name = class_name.split('.')[-1]
+                    obj_class = FileStorage.__objects.get(class_name, BaseModel)
+                    obj_instance = obj_class(**value)
                     FileStorage.__objects[key] = obj_instance
         except FileNotFoundError:
             pass
@@ -38,4 +41,5 @@ class FileStorage:
         """
         Get a dictionary of class names mapped to their corresponding class objects.
         """
+        from models.user import User
         return storage._FileStorage__objects

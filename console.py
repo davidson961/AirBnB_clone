@@ -5,6 +5,8 @@ Module containing the HBNBCommand class for the command interpreter.
 import cmd
 from models.base_model import BaseModel
 from models import storage
+import re
+import json
 
 
 class HBNBCommand(cmd.Cmd):
@@ -35,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """
-        Create a new instance of BaseModel, save it, and print the id.
+        Create a new instance of BaseModel, User, save it, and print the id.
         """
         if not arg:
             print("** class name missing **")
@@ -59,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
                 class_name = args[0]
                 obj_id = args[1]
                 key = "{}.{}".format(class_name, obj_id)
-                print(storage.all().get(key, "** no instance found **"))
+                print(FileStorage.all().get(key, "** no instance found **"))
             except IndexError:
                 print("** instance id missing **")
             except NameError:
@@ -77,10 +79,10 @@ class HBNBCommand(cmd.Cmd):
                 class_name = args[0]
                 obj_id = args[1]
                 key = "{}.{}".format(class_name, obj_id)
-                all_objs = storage.all()
+                all_objs = FileStorage.all()
                 if key in all_objs:
                     del all_objs[key]
-                    storage.save()
+                    FileStorage.save()
                 else:
                     print("** no instance found **")
             except IndexError:
@@ -93,13 +95,13 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances.
         """
         args = arg.split()
-        all_objs = storage.all()
+        all_objs = FileStorage.all()
         if not args:
             print([str(v) for v in all_objs.values()])
         else:
             try:
                 class_name = args[0]
-                if class_name in storage.classes():
+                if class_name in FileStorage.classes():
                     print([str(v) for k, v in all_objs.items() if class_name in k])
                 else:
                     print("** class doesn't exist **")
@@ -118,7 +120,7 @@ class HBNBCommand(cmd.Cmd):
                 class_name = args[0]
                 obj_id = args[1]
                 key = "{}.{}".format(class_name, obj_id)
-                all_objs = storage.all()
+                all_objs = FileStorage.all()
                 if key not in all_objs:
                     print("** no instance found **")
                     return
@@ -132,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
                 attr_value = args[3]
                 obj_instance = all_objs[key]
                 setattr(obj_instance, attr_name, eval(attr_value))
-                storage.save()
+                FileStorage.save()
             except IndexError:
                 print("** instance id missing **")
             except NameError:
