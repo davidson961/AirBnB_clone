@@ -91,14 +91,15 @@ class HBNBCommand(cmd.Cmd):
         if not args or args[0] not in globals():
             print("** class doesn't exist **")
             return
-        class_name == args[0]:
-            all_instances = eval(class_name).all()
-            for obj in all_instances:
+        for key, obj in storage.all().items():
+            class_name, _ = key.split('.')
+            if class_name == args[0]:
                 obj_list.append(str(obj))
-                print(obj_list)
+        print(obj_list)
 
     def do_update(self, arg):
-        """Update an instance based on the class name and id."""
+        """Update an instance based on the class name, id, and
+        dictionary representation."""
         args = shlex.split(arg)
         if not args:
             print("** class name missing **")
@@ -112,21 +113,21 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
                 return
             if len(args) < 3:
-                print("** dictionary  missing **")
+                print("** dictionary missing **")
             else:
                 obj = storage.all()[key]
                 try:
                     attr_dict = eval(args[2])
                     if not isinstance(attr_dict, dict):
                         raise SyntaxError
-                    except (SyntaxError, NameError):
-                        print("** invalid dictionary representation **")
-                        return
-                    for k, v in attr_dict.items():
-                        if hasattr(obj, k):
-                            attr_type = type(getattr(obj, k))
-                            setattr(obj, k, attr_type(v))
-                            storage.save()
+                except (SyntaxError, NameError):
+                    print("** invalid dictionary representation **")
+                    return
+                for k, v in attr_dict.items():
+                    if hasattr(obj, k):
+                        attr_type = type(getattr(obj, k))
+                        setattr(obj, k, attr_type(v))
+                storage.save()
 
 
 if __name__ == '__main__':
