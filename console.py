@@ -16,12 +16,10 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """Catch commands if nothing else matches then."""
-        # print("DEF:::", line)
         self._precmd(line)
 
     def _precmd(self, line):
         """Intercepts commands to test for class.syntax()"""
-        # print("PRECMD:::", line)
         match = re.search(r"^(\w*)\.(\w+)(?:\(([^)]*)\))$", line)
         if not match:
             return line
@@ -97,9 +95,9 @@ class HBNBCommand(cmd.Cmd):
         elif line not in storage.classes():
             print("** class doesn't exist **")
         else:
-            b = storage.classes()[line]()
-            b.save()
-            print(b.id)
+            a = storage.classes()[line]()
+            a.save()
+            print(a.id)
 
     def do_show(self, line):
         """Prints the string representation of an instance.
@@ -174,8 +172,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        rex = r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
-        match = re.search(rex, line)
+        rexp = r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
+        match = re.search(rexp, line)
         classname = match.group(1)
         uid = match.group(2)
         attribute = match.group(3)
@@ -210,7 +208,7 @@ class HBNBCommand(cmd.Cmd):
                     try:
                         value = cast(value)
                     except ValueError:
-                        pass  # fine, stay a string then
+                        pass
                 setattr(storage.all()[key], attribute, value)
                 storage.all()[key].save()
 
