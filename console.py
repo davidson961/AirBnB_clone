@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Module containing the HBNBCommand class for the command interpreter.
+Module containing the HBNBCommand class
+for the command interpreter.
 """
 import cmd
 import json
@@ -36,7 +37,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """
-        Creates a new instance of BaseModel, saves it (to the JSON file), and prints the id.
+        Creates a new instance of BaseModel, saves it
+        (to the JSON file), and prints the id.
         """
         if not arg:
             print("** class name missing **")
@@ -50,7 +52,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """
-        Prints the string representation of an instance based on the class name and id.
+        Prints the string representation of an instance
+        based on the class name and id.
         """
         args = arg.split()
         if not args:
@@ -69,7 +72,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """
-        Deletes an instance based on the class name and id (saves the change into the JSON file).
+        Deletes an instance based on the class name and id
+        (saves the change into the JSON file).
         """
         args = arg.split()
         if not args:
@@ -93,7 +97,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """
-        Prints all string representation of all instances based or not on the class name.
+        Prints all string representation of all instances based or not
+        on the class name.
         """
         args = arg.split()
         instances = storage.all()
@@ -102,13 +107,15 @@ class HBNBCommand(cmd.Cmd):
         else:
             try:
                 class_name = args[0]
-                print([str(obj) for key, obj in instances.items() if class_name == key.split('.')[0]])
+                print([str(obj) for key,
+                obj in instances.items() if class_name == key.split('.')[0]])
             except NameError:
                 print("** class doesn't exist **")
 
     def do_update(self, arg):
         """
-        Updates an instance based on the class name and id by adding or updating attribute.
+        Updates an instance based on the class name and id
+        by adding or updating attribute.
         """
         args = arg.split()
         if not args:
@@ -137,8 +144,8 @@ class HBNBCommand(cmd.Cmd):
                     attribute_value = args[3]
                     instance = instances[key]
                     try:
-                        # Try to cast the attribute value to the type of the attribute
-                        setattr(instance, attribute_name, type(getattr(instance, attribute_name))(attribute_value))
+                        setattr(instance, attribute_name, type(getattr(
+                            instance, attribute_name))(attribute_value))
                     except ValueError:
                         # If casting fails, assume it's a string
                         setattr(instance, attribute_name, attribute_value)
@@ -149,4 +156,3 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-
