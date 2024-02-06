@@ -5,6 +5,7 @@ Module containing the BaseModel class
 
 import uuid
 from datetime import datetime
+from models import storage  # Importing the storage instance
 
 class BaseModel:
     """
@@ -35,6 +36,10 @@ class BaseModel:
                     else:
                         setattr(self, key, value)
 
+        # If it’s a new instance (not from a dictionary representation), add a call to the method new(self) on storage
+        if not kwargs:
+            storage.new(self)
+
     def __str__(self):
         """
         Return a string representation of the instance
@@ -44,8 +49,10 @@ class BaseModel:
     def save(self):
         """
         Update the public instance attribute updated_at with the current datetime
+        Call save(self) method of storage
         """
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """
