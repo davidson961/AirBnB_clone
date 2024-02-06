@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
-Module containing the FileStorage class
+This module updates the FileStorage class to manage serialization and
+deserialization
+of instances for all new classes: Place, State, City, Amenity, and Review.
 """
 
 import os
@@ -9,54 +11,62 @@ import datetime
 
 
 class FileStorage:
-    """
-    Serializes instances to a JSON file and deserializes JSON file to instances
-    """
 
+    """
+    This class handles serialization and deserialization of instances to
+    and from a JSON file.
+    """
     __file_path = "file.json"
     __objects = {}
 
-    def __init__(self):
-        """
-        Initializes FileStorage instance and creates an empty JSON file if it doesn't exist
-        """
-        try:
-            with open(FileStorage.__file_path, mode='r', encoding='utf-8'):
-                pass  # File exists, do nothing
-        except FileNotFoundError:
-            with open(FileStorage.__file_path, mode='w', encoding='utf-8') as file:
-                json.dump({}, file)  # Create an empty JSON file
-
     def all(self):
-        """
-        Returns the dictionary __objects
-        """
+        """Provides the dictionary named "__objects."""
         return FileStorage.__objects
 
     def new(self, obj):
         """
-        Sets in __objects the obj with key <obj class name>.id
+        Assigns the object with the key "<object class name>.id" in
+        the "__objects" set.
         """
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        key = "{}.{}".format(type(obj).__name__, obj.id)
         FileStorage.__objects[key] = obj
 
     def save(self):
         """
-        Serializes __objects to the JSON file (path: __file_path)
+        Serializes the "__objects" to a JSON file located at
+        "__file_path.
         """
-        serialized_objects = {}
-        for key, obj in FileStorage.__objects.items():
-            serialized_objects[key] = obj.to_dict()
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
+            res = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
+            json.dump(res, f)
 
-        with open(FileStorage.__file_path, mode='w', encoding='utf-8') as file:
-            json.dump(serialized_objects, file, default=str)
+    def classes(self):
+        """
+        Provides a dictionary containing valid classes and their
+        corresponding references.
+        """
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
 
-     def reload(self):
+        classes = {"BaseModel": BaseModel,
+                   "User": User,
+                   "State": State,
+                   "City": City,
+                   "Amenity": Amenity,
+                   "Place": Place,
+                   "Review": Review}
+        return classes
+
+    def reload(self):
         """
         Deserializes the JSON file to __objects.
         Only reloads if the JSON file exists.
         """
-         from models.base_model import BaseModel
         if not os.path.isfile(FileStorage.__file_path):
             return
         with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
@@ -65,3 +75,43 @@ class FileStorage:
                         for k, v in obj_dict.items()}
             FileStorage.__objects = obj_dict
 
+    def attributes(self):
+        """
+        Provides the valid attributes and their corresponding types for
+        the given class name.
+        """
+        attributes = {
+            "BaseModel":
+            {"id": str,
+                "created_at": datetime.datetime,
+                "updated_at": datetime.datetime},
+            "User":
+            {"email": str,
+                "password": str,
+                "first_name": str,
+                "last_name": str},
+            "State":
+            {"name": str},
+            "City":
+            {"state_id": str,
+                "name": str},
+            "Amenity":
+            {"name": str},
+            "Place":
+            {"city_id": str,
+                "user_id": str,
+                "name": str,
+                "description": str,
+                "number_rooms": int,
+                "number_bathrooms": int,
+                "max_guest": int,
+                "price_by_night": int,
+                "latitude": float,
+                "longitude": float,
+                "amenity_ids": list},
+            "Review":
+            {"place_id": str,
+                "user_id": str,
+                "text": str}
+            }
+        return attributes
