@@ -6,6 +6,7 @@ Module containing the FileStorage class
 import os
 import json
 import datetime
+from models.base_model import BaseModel
 
 
 class FileStorage:
