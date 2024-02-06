@@ -6,7 +6,6 @@ Module containing the FileStorage class
 import os
 import json
 import datetime
-from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -57,6 +56,7 @@ class FileStorage:
         Deserializes the JSON file to __objects.
         Only reloads if the JSON file exists.
         """
+         from models.base_model import BaseModel
         if not os.path.isfile(FileStorage.__file_path):
             return
         with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
