@@ -52,14 +52,13 @@ class FileStorage:
             obj_dict = {k: self.classes()[v["__class__"]](**v)
                         for k, v in obj_dict.items()}
             FileStorage.__objects = obj_dict
-            
+
     def classes(self):
         """
         Provides a dictionary containing valid classes and their
         corresponding references.
         """
         from models.base_model import BaseModel
-       
 
         classes = {"BaseModel": BaseModel}
         return classes
