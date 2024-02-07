@@ -1,66 +1,61 @@
 #!/usr/bin/python3
 """
-Module containing the BaseModel class
+This module updates the BaseModel class to link it to FileStorage and adds
+calls to storage in save and __init__ methods.
 """
 
 import uuid
+from models import storage
 from datetime import datetime
-from models import storage  # Importing the storage instance
+
 
 class BaseModel:
-    """
-    Defines the common attributes/methods for other classes
-    """
+
+    """ This class serves as base model with common attributes and methods."""
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize instance attributes
-
-        If kwargs is not empty:
-            - Update instance attributes with the provided values.
-            - Convert 'created_at' and 'updated_at' strings into datetime objects.
-        Otherwise:
-            - Create 'id' and 'created_at' attributes as you did previously (new instance).
+        Initializes a new instance of BaseModel using *args and **kwargs.
+        If it’s a new instance (not from a dictionary representation),
+        adds a call to the method new(self) on storage.
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
 
-        # If kwargs is not empty, update instance attributes
-        if kwargs:
-            for key, value in kwargs.items():
-                # Ignore __class__ as it is not an attribute of the class
-                if key != '__class__':
-                    if key in ['created_at', 'updated_at']:
-                        setattr(self, key, datetime.strptime(
-                            value, '%Y-%m-%dT%H:%M:%S.%f'))
-                    else:
-                        setattr(self, key, value)
-
-        # If it’s a new instance (not from a dictionary representation), add a call to the method new(self) on storage
-        if not kwargs:
+        if kwargs is not None and kwargs != {}:
+            for key in kwargs:
+                if key == "created_at":
+                    self.__dict__["created_at"] = datetime.strptime(
+                        kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                elif key == "updated_at":
+                    self.__dict__["updated_at"] = datetime.strptime(
+                        kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                else:
+                    self.__dict__[key] = kwargs[key]
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
             storage.new(self)
 
     def __str__(self):
-        """
-        Return a string representation of the instance
-        """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        """Returns a string representation of the BaseModel instance."""
+
+        return "[{}] ({}) {}".format(
+                type(self).__name__, self.id, self.__dict__)
 
     def save(self):
         """
-        Update the public instance attribute updated_at with the current datetime
-        Call save(self) method of storage
+        Updates the 'updated_at' attribute with the current datetime and
+        calls save() method of storage.
         """
+
         self.updated_at = datetime.now()
         storage.save()
 
     def to_dict(self):
-        """
-        Return a dictionary representation of the instance
-        """
-        instance_dict = self.__dict__.copy()
-        instance_dict['__class__'] = self.__class__.__name__
-        instance_dict['created_at'] = self.created_at.isoformat()
-        instance_dict['updated_at'] = self.updated_at.isoformat()
-        return instance_dict
+        """Returns a dictionary representation of the BaseModel instance."""
+
+        my_dict = self.__dict__.copy()
+        my_dict["__class__"] = type(self).__name__
+        my_dict["created_at"] = my_dict["created_at"].isoformat()
+        my_dict["updated_at"] = my_dict["updated_at"].isoformat()
+        return my_dict
