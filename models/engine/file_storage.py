@@ -1,4 +1,8 @@
+#!/usr/bin/python3
+
 import json
+import os
+import datetime
 
 class FileStorage:
     """
@@ -48,4 +52,3 @@ class FileStorage:
 
         except FileNotFoundError:
             pass
-
