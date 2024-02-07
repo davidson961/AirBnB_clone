@@ -3,6 +3,7 @@
 import json
 import os
 import datetime
+from models.base_model import BaseModel
 
 class FileStorage:
     """
@@ -36,7 +37,7 @@ class FileStorage:
         with open(self.__file_path, mode='w', encoding='utf-8') as file:
             json.dump(serialized_objects, file)
 
-    def reload(self):
+   def reload(self):
         """
         Deserializes the JSON file to __objects
         (only if the JSON file (__file_path) exists; otherwise, do nothing)
@@ -47,7 +48,8 @@ class FileStorage:
 
             for key, value in loaded_objects.items():
                 class_name, obj_id = key.split('.')
-                obj = eval(class_name)(**value)
+                obj_class = globals()[class_name]
+                obj = obj_class(**value)
                 self.__objects[key] = obj
 
         except FileNotFoundError:
