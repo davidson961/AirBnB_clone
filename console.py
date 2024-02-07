@@ -99,19 +99,6 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, args[2], eval(args[3]))
                 obj.save()
 
-    def emptyline(self):
-        """Do nothing on empty input line"""
-        pass
-
-    def do_EOF(self, arg):
-        """EOF command to exit the program"""
-        print()
-        return True
-
-    def do_quit(self, arg):
-        """Quit command to exit the program"""
-        return True
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
