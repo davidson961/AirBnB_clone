@@ -40,22 +40,6 @@ class FileStorage:
             res = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
             json.dump(res, f)
 
-    def classes(self):
-        """
-        Provides a dictionary containing valid classes and their
-        corresponding references.
-        """
-        from models.base_model import BaseModel
-
-        classes = {"BaseModel": BaseModel,
-                   "User": User,
-                   "State": State,
-                   "City": City,
-                   "Amenity": Amenity,
-                   "Place": Place,
-                   "Review": Review}
-        return classes
-
     def reload(self):
         """
         Deserializes the JSON file to __objects.
