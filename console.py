@@ -100,7 +100,8 @@ class HBNBCommand(cmd.Cmd):
                 obj = storage.all()[key]
                 setattr(obj, args[2], eval(args[3]))
                 obj.save()
-
-
-if __name__ == '__main__':
+    
+    
+    if __name__ == "__main__":
+    models.storage.reload()
     HBNBCommand().cmdloop()
