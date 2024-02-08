@@ -103,5 +103,4 @@ class HBNBCommand(cmd.Cmd):
     
     
     if __name__ == "__main__":
-    models.storage.reload()
     HBNBCommand().cmdloop()
