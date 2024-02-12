@@ -4,12 +4,7 @@ from models.base_model import BaseModel
 
 class Review(BaseModel):
     """
-    Review class that inherits from BaseModel.
-
-    Public class attributes:
-        place_id (str): Place ID (initialized as an empty string, linked to Place.id).
-        user_id (str): User ID (initialized as an empty string, linked to User.id).
-        text (str): Review text (initialized as an empty string).
+    This class defines a Review with place_id, user_id, text attributes.
     """
     def __init__(self, *args, **kwargs):
         """Initialize Review instance."""

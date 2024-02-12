@@ -1,9 +1,5 @@
 #!/usr/bin/python3
-"""
-Module containing the User class, a subclass of BaseModel.
-
-The User class represents a user in the AirBnB clone project.
-"""
+"""This module defines the User class, which inherits from BaseModel."""
 from models.base_model import BaseModel
 
 class User(BaseModel):
