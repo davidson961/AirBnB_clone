@@ -13,8 +13,8 @@ class HBNBCommand(cmd.Cmd):
     Command interpreter class
     """
     prompt = "(hbnb) "
-    valid_classes = ["BaseModel"] 
-    
+    valid_classes = ["BaseModel"]
+
     def do_quit(self, arg):
         """Quit command to exit the program"""
         return True
@@ -103,6 +103,7 @@ class HBNBCommand(cmd.Cmd):
                 obj = storage.all()[key]
                 setattr(obj, args[2], eval(args[3]))
                 obj.save()
-    
+
+
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
