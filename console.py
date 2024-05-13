@@ -81,7 +81,7 @@ class HBNBCommand(cmd.Cmd):
                 instances = storage.all().values()
                 filtered_instances = [str(obj) for obj in instances if isinstance(obj, eval(words[0]))]
                 print(filtered_instances)
-            else:
+        else:
                 instances = storage.all().values()
                 all_instances = [str(obj) for obj in instances]
                 print(all_instances)
