@@ -4,6 +4,8 @@ Module containing the HBNBCommand class for the command interpreter
 """
 
 import cmd
+import re
+import json
 from models.base_model import BaseModel
 from models import storage
 
