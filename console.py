@@ -72,19 +72,20 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, line):
-        """Prints all string representation of all instances.
-        """
+        """Prints all string representations of all instances."""
         if line != "":
             words = line.split(' ')
             if words[0] not in storage.classes():
                 print("** class doesn't exist **")
             else:
-                line = [str(obj) for key, obj in storage.all().items()
-                        if type(obj).__name__ == words[0]]
-                print(line)
-        else:
-            new_list = [str(obj) for key, obj in storage.all().items()]
-            print(new_list)
+                instances = storage.all().values()
+                filtered_instances = [str(obj) for obj in instances if isinstance(obj, eval(words[0]))]
+                print(filtered_instances)
+            else:
+                instances = storage.all().values()
+                all_instances = [str(obj) for obj in instances]
+                print(all_instances)
+
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id."""
