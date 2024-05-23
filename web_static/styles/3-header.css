@@ -1,17 +1,10 @@
 header {
-    background-color: #484848;
+    color: white;
     height: 70px;
-    position: relative;
-}
-
-.logo {
-    width: 100px;
-    height: 30px;
-    background-image: url('../images/logo.png');
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
+    padding-left: 20px;
+    background-image: url("../images/logo.png");
     background-repeat: no-repeat;
-    background-position: center left;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 20px;
+    background-position: 20px 50%;
 }
